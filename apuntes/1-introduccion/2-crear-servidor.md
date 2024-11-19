@@ -60,4 +60,4 @@ Esto indica qué debe hacer el servidor cuando recibe una solicitud **HTTP** del
     });
 ```
 
-arrancando el servidor para que escuche las solicitudes entrantes en el puerto definido
+Arrancando el servidor para que escuche las solicitudes entrantes en el puerto definido
