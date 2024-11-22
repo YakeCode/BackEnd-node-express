@@ -100,3 +100,56 @@ routerApi (app)
 ```
 
 Y LISTO tendremos nuestro sistema mucho mas fácil de entender y gestionar 😁
+
+---
+
+## Versionamiento de rutas
+
+Es algo que se utiliza para poder darle maleabilidad al código mucho mas fácil.
+
+- En nuestro archivo router importamos express
+
+```Javascript
+    const express = require('express')
+```
+
+- Creamos el erutado principal con su versión
+
+```Javascript
+const routerMaster = express.Router();`
+```
+
+- Usamos este para que sea el PATH principal de esta versión.
+
+```Javascript
+  app.use('/api/v1', routerMaster);
+
+  /*AplicarVersionamiento a las rutas */
+
+  routerMaster.use('/products', productsRouter)
+  routerMaster.use('/users', usersRouter)
+```
+
+Asi al momento que tengamos que cambiar una ruta podemos crear una ruta master v2 y referirnos a esta.
+
+```Javascript
+const express = require('express')
+const productsRouter = require ('./products-router')
+const usersRouter = require ('./users')
+
+const routerApi = (app)=>{
+  /*Versionar rutas */
+  const routerMasterV1 = express.Router();
+  app.use('/api/v1', routerMaster);
+  /*Esta se crearía para una proxima version*/
+  {const routerMasterV2 = express.Router();
+  app.use('/api/v2', routerMaster);}
+
+  /*AplicarVersionamiento a las rutas */
+
+  routerMaster.use('/products', productsRouter)
+  routerMaster.use('/users', usersRouter)
+}
+
+module.exports = routerApi;
+```

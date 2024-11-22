@@ -47,4 +47,16 @@ const CallbackProductId = (request, response) => {
 }
 router.get( productId, CallbackProductId)
 
+/* POST */
+const routePostProduct = '/'
+const CallbackPostProduct = (request, response)=>{
+  const body = request.body
+  response.json({
+    message: 'Created',
+    data : body
+  })
+}
+
+router.post(routePostProduct, CallbackPostProduct)
+
 module.exports = router /* Se exporta el modulo completo */

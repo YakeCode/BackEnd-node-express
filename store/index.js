@@ -7,6 +7,8 @@ const app = express(); // Crear APP
 
 const port = 3210; // puerto en el cual va a correr la app
 
+app.use(express.json()) //MIDDLEWARE para poder recibir json
+
 app.get('/'/*ruta */, (request, response)=>{/*Callback */
   response.send('hola enviado desde el server en express')
 })

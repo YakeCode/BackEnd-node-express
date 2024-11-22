@@ -3,6 +3,8 @@ const { faker } = require('@faker-js/faker');
 
 const router = express.Router();
 
+/* Ruta padre http://localhost:3210/api/v1 */
+
 
 // PARÁMETROS CON QUERY
 
