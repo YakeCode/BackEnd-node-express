@@ -1,7 +1,10 @@
 const express = require ('express')
-const { faker } = require('@faker-js/faker');
+
+const ProductsService = require('../services/product-service')
 
 const router = express.Router(); /*Se genera un router para los productos*/
+
+const service = new ProductsService();
 
 /*  RUTAS ESPECIFICAS */
 
@@ -9,16 +12,7 @@ const router = express.Router(); /*Se genera un router para los productos*/
 const rutaProducts= '/';
 
 const CallbackProducts = (request, response)=>{
-  const products =[]
-  const {size} = request.query;
-  const limit = size || 100
-  for (let index = 0; index < limit; index++){
-    products.push({
-      name :faker.commerce.productName(),
-      price : parseInt(faker.commerce.price(),10),
-      image : faker.image.url()
-    })
-  }
+const products = service.find();
   response.json(products)
 }
 router.get(rutaProducts, CallbackProducts) /* Se cambia la palabra app por router */
@@ -39,11 +33,8 @@ router.get(productFilter,CallbackFilter)
 const productId = '/:id' /* Los 2 puntos significa que es un parámetro*/
 const CallbackProductId = (request, response) => {
   const {id} = request.params;
-  response.json({
-    id,
-    name: 'Camera',
-    price: 2000
-  })
+  const product = service.findOne(id)
+  response.json(product)
 }
 router.get( productId, CallbackProductId)
 
