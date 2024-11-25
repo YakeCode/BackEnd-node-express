@@ -42,10 +42,8 @@ router.get( productId, CallbackProductId)
 const routePostProduct = '/'
 const CallbackPostProduct = (request, response)=>{
   const body = request.body
-  response.status(201).json({
-    message: 'Created',
-    data : body
-  })
+  const newProduct = service.create(body)/* Body es la información que se le manda al servidor*/
+  response.status(201).json(newProduct)
 }
 
 router.post(routePostProduct, CallbackPostProduct)
@@ -56,11 +54,8 @@ const routePutProduct = '/:id'
 const CallbackPutProduct = (request, response)=>{
   const { id } = request.params;
   const body = request.body
-  response.json({
-    message: 'overwritten',
-    data : body,
-    id
-  })
+  const updateProduct = service.update(id, body)
+  response.json(updateProduct)
 }
 
 router.put(routePutProduct, CallbackPutProduct)
@@ -71,11 +66,8 @@ const routePatchProduct = '/:id'
 const CallbackPatchProduct = (request, response)=>{
   const { id } = request.params;
   const body = request.body
-  response.json({
-    message: 'Update Product',
-    data : body,
-    id
-  })
+  const updateProduct = service.update(id, body)
+  response.json(updateProduct)
 }
 
 router.patch(routePatchProduct, CallbackPatchProduct)
@@ -83,12 +75,11 @@ router.patch(routePatchProduct, CallbackPatchProduct)
 /* Delete */
 
 const routeDeleteProduct = '/:id' /*Ruta exige el id*/
+
 const CallbackDeleteProduct = (request, response)=>{
   const { id } = request.params;/*trae el id de los parametros*/
-  response.json({ /* No necesita un cuerpo */
-    message: 'Successfully deleted',
-    id
-  })
+  const deleteProduct = service.delete(id)
+  response.json(deleteProduct)
 }
 
 router.delete(routeDeleteProduct, CallbackDeleteProduct) /*Ejecuta el método Delete*/
