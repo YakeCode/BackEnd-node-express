@@ -2,6 +2,8 @@
 
 const express = require ('express')
 const routerApi = require ('./routes/router.js')
+/* MIDDLEWARES */
+const { middlewareHttpError, errorHandler } = require ('./middlewares/error.handler.js')
 
 const app = express(); // Crear APP
 
@@ -14,6 +16,12 @@ app.get('/'/*ruta */, (request, response)=>{/*Callback */
 })
 
 routerApi (app)
+/* MIDDLEWARES */
+/* middleware debe ir después del routing */
+
+app.use( middlewareHttpError )
+app.use( errorHandler)
+
 
 app.listen(port, ()=>{
   console.log('Mi puerto ', port)
