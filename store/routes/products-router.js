@@ -56,9 +56,6 @@ const CallbackPostProduct = async (request, response, next)=>{
     const newProduct = await service.create(body)/* Body es la información que se le manda al servidor*/
     response.status(201).json(newProduct)
   } catch (error) {
-    response.status(400).json({
-      message : error.message
-    })
     next(error)
   }
 }
@@ -91,12 +88,8 @@ const  CallbackPatchProduct = async (request, response, next)=>{
   const updateProduct = await service.update(id, body)
   response.status(200).json(updateProduct)
   } catch (err){
-    response.status(404).json({
-      message: err.message
-    })
-    next(err);
+    next(err)
   }
-
 }
 
 router.patch(routePatchProduct, CallbackPatchProduct)

@@ -10,4 +10,17 @@ const errorHandler = (error, request, response, next)=>{
     })
 }
 
-module.exports = { middlewareHttpError, errorHandler }
+const boomErrorHandler = (error, request, response, next)=>{
+  if (error.isBoom) { //Valida si el el error es tipo Boom
+    const { output} = error
+    response.status(output.statusCode).json(output.payload)
+    /*Para leer el status code se utiliza el .statusCode*/
+    /*La info que va en el json viene de la librería en .payload */
+  }else{
+    next(error)
+  }
+}
+
+
+module.exports = { middlewareHttpError, errorHandler, boomErrorHandler}
+
