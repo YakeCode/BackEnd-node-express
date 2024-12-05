@@ -4,6 +4,15 @@ const express = require ('express')
 
 const ProductsService = require('../services/product-service')
 
+const {
+  createProductSchema,
+  updateProductSchema,
+  getProductSchema,
+  deleteProductSchema
+} = require('../schema/product.schema.js')
+
+const validatorHandler = require ('../middlewares/validador.handler.js')
+
 const router = express.Router(); /*Se genera un router para los productos*/
 
 const service = new ProductsService();
@@ -46,7 +55,12 @@ const CallbackProductId = async (request, response, next) => {
     next(error)
   }
 }
-router.get( productId, CallbackProductId)
+
+router.get(
+  productId,
+  validatorHandler(getProductSchema, 'params'),
+  CallbackProductId
+)
 
 /* POST */
 const routePostProduct = '/'
@@ -60,7 +74,11 @@ const CallbackPostProduct = async (request, response, next)=>{
   }
 }
 
-router.post(routePostProduct, CallbackPostProduct)
+router.post(
+  routePostProduct,
+  validatorHandler(createProductSchema, 'body'),
+  CallbackPostProduct
+)
 
 /* PUT */
 
@@ -76,7 +94,11 @@ const CallbackPutProduct = async (request, response, next)=>{
   }
 }
 
-router.put(routePutProduct, CallbackPutProduct)
+router.put(
+  routePutProduct,
+  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(createProductSchema, 'body'),
+  CallbackPutProduct)
 
 /* PATCH */
 
@@ -92,9 +114,15 @@ const  CallbackPatchProduct = async (request, response, next)=>{
   }
 }
 
-router.patch(routePatchProduct, CallbackPatchProduct)
+router.patch(
+  routePatchProduct,
+  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(updateProductSchema, 'body'),
+  CallbackPatchProduct)
 
 /* Delete */
+
+const deleteProduct = '/:id'
 
 const CallbackDeleteProduct = async (request, response, next) => {
   try {
@@ -112,5 +140,10 @@ const CallbackDeleteProduct = async (request, response, next) => {
     next(error);
   }
 };
+
+router.delete(
+  deleteProduct,
+  validatorHandler(deleteProductSchema, 'params'),
+  CallbackDeleteProduct)
 
 module.exports = router /* Se exporta el modulo completo */

@@ -48,8 +48,6 @@ class ProductsService {
     }else if (product.isBlock === true ) {
       throw boom.conflict('Product is block')
     }
-
-
     return product;
   }
 
@@ -77,7 +75,6 @@ class ProductsService {
       message: 'Successful Delete'
     }
   }
-
 }
 
 module.exports = ProductsService;
