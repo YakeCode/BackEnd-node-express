@@ -40,3 +40,5 @@ app.use( errorHandler)
 app.listen(port, ()=>{
   console.log('Mi puerto ', port)
 })
+
+module.exports = app;
