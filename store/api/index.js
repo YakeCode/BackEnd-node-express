@@ -8,14 +8,15 @@ const { middlewareHttpError, errorHandler, boomErrorHandler } = require ('./midd
 
 const app = express(); // Crear APP
 
-const port = 3210; // puerto en el cual va a correr la app
+const port = process.env.PORT||3210; // puerto en el cual va a correr la app
 
 app.use(express.json()) //MIDDLEWARE para poder recibir jsonÇ
 
-const domains = ['http://localhost:8080', 'http://localhost:8082']
+const domains = ['http://localhost:8080', 'http://localhost:3210'];
+
 const options = {
   origin: (origin, Callback)=>{
-    if (domains.includes(origin)){
+    if (!origin ||domains.includes(origin)){
       Callback(null, true)
     }else {
       Callback(new Error("Don't Access"))
@@ -24,7 +25,7 @@ const options = {
 }
 app.use(cors(options))
 
-app.get('/'/*ruta */, (request, response)=>{/*Callback */
+app.get('/api/'/*ruta */, (request, response)=>{/*Callback */
   response.send('hola enviado desde el server en express')
 })
 
